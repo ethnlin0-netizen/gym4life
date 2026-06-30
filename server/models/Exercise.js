@@ -5,3 +5,4 @@ const exerciseSchema = new mongoose.Schema()({
     musclesTargeted: [String],
 })
 
+export default mongoose.model('Exercise', exerciseSchema)
