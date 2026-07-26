@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import LandingPage from './pages/LandingPage.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx'
+import DashboardPage from './pages/DashboardPage.tsx'
+import { useAuth } from './context/AuthContext.tsx'
 
 function App() {
   return (
@@ -9,7 +11,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path = "/dashboard" element={
           <ProtectedRoute>
-            <div>Dashboard coming soon</div>
+            <DashboardPage />
           </ProtectedRoute>
         }/>
       </Routes>
