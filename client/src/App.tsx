@@ -6,6 +6,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/dashboard" element={<div>Dashboard coming soon</div>} />
       </Routes>
     </BrowserRouter>
   )
