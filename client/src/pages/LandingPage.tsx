@@ -1,14 +1,19 @@
-import PageTitle from '../components/PageTitle.tsx';
-import Landing from '../components/Landing.tsx';
+import { useState } from 'react'
+import Login from '../components/Login.tsx'
+import Register from '../components/Register.tsx'
 
-const LandingPage = () =>
-{
-    return (
+const LandingPage = () => {
+    const [activeTab, setActiveTab] = useState<string>('register')
+
+    return(
         <div>
-            <PageTitle />
-            <Landing />
+            <button onClick={() => setActiveTab('register')}>Register</button>
+            <button onClick={() => setActiveTab('login')}>Login</button>
+            
+            {activeTab === 'register' && <Register />}
+            {activeTab === 'login' && <Login />}
         </div>
-    );
-};
+    )
+}
 
-export default LandingPage;
+export default LandingPage

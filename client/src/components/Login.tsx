@@ -1,36 +1,38 @@
-import {useState} from 'react';
-
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function Login() {
-    /*Placeholder for now, real login logic goes here later*/
-    const [message, setMessage] = useState('');
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
-    function doLogin(event: React.MouseEvent): void {
-        event.preventDefault();
+    const [login, setLogin] = useState('')
+    const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
+    const [messageType, setMessageType] = useState('')
+    const navigate = useNavigate()
 
-        alert('doIt() ' + login + ' ' + password);
+    async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+        e.preventDefault()
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/auth/login', {
+                login,
+                password
+            })
+
+            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('user', JSON.stringify(response.data.user))
+            navigate('/dashboard')
+            
+        } catch (error) {
+            setMessage('Server error, please try again')
+            setMessageType('error');
+        }
     }
 
-    function handleSetLogin( e:any ): void
-    {
-        setLogin(e.target.value);
-    }
+    return (
+        <div>
 
-    function handleSetPassword( e:any ): void
-    {
-        setPassword(e.target.value);
-    }
-
-    return(
-        <div id="loginDiv">
-            <span id="inner-title">PLEASE LOG IN</span><br />
-            <input type="text" id="loginName" placeholder="Login" onChange={handleSetLogin} /><br />
-            <input type="password" id="loginPassword" placeholder="Password" onChange={handleSetPassword} /><br />
-            <input type="submit" id="loginButton" className="buttons" value="Do It" onClick={doLogin} />
-            <span id="loginResult">{message}</span>
         </div>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login
