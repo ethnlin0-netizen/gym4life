@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext.tsx'
 
 function Login() {
     const [login, setLogin] = useState('')
@@ -8,6 +9,7 @@ function Login() {
     const [message, setMessage] = useState('')
     const [messageType, setMessageType] = useState('')
     const navigate = useNavigate()
+    const auth = useAuth()
 
     async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -18,12 +20,11 @@ function Login() {
                 password
             })
 
-            localStorage.setItem('token', response.data.token)
-            localStorage.setItem('user', JSON.stringify(response.data.user))
+            auth?.login(response.data.token, response.data.user.id, response.data.user.login)
             navigate('/dashboard')
 
-        } catch (error) {
-            setMessage('Server error, please try again')
+        } catch (error: any) {
+            setMessage(error.response?.data?.message || 'Server error, please try again')
             setMessageType('error');
         }
     }

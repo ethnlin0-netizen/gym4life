@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext.tsx'
 
 function Register() {
     const [firstName, setFirstName] = useState('')
@@ -9,6 +11,8 @@ function Register() {
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
     const [messageType, setMessageType] = useState<'success' | 'error'>('error')
+    const navigate = useNavigate()
+    const auth = useAuth()
 
     async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault() //stops page from refreshing on submit
@@ -43,15 +47,12 @@ function Register() {
             })
             //TO DO: add email verification
             
-            //store token in localStorage
-            localStorage.setItem('token', response.data.token)
+            //after registering they should have access to auth
+            auth?.login(response.data.token, response.data.user.id, response.data.user.login)
+            navigate('/dashboard')
 
-            //store user object in localStorage
-            localStorage.setItem('user', JSON.stringify(response.data.user))
-
-            setMessage('Registration successful! You may now use your credentials to log in.')
-        } catch (error) {
-            setMessage('Server error, please try again')
+        } catch (error: any) {
+            setMessage(error.response?.data?.message || 'Server error, please try again')
             setMessageType('error')
         }
     }
