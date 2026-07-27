@@ -26,6 +26,8 @@ function Login() {
         } catch (error: any) {
             setMessage(error.response?.data?.message || 'Server error, please try again')
             setMessageType('error');
+            setLogin('')
+            setPassword('')
         }
     }
 

@@ -5,10 +5,11 @@ import DashboardPage from './pages/DashboardPage.tsx'
 import { useAuth } from './context/AuthContext.tsx'
 
 function App() {
+  const auth = useAuth()
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element= {auth?.token ? <Navigate to='/dashboard' /> : <LandingPage />} />
         <Route path = "/dashboard" element={
           <ProtectedRoute>
             <DashboardPage />

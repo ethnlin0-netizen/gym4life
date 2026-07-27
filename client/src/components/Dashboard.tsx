@@ -9,6 +9,7 @@ function Dashboard() {
 
     return (
         <div>
+            <h1>Welcome, {auth?.username}</h1>
             <button onClick={() => {
                 auth?.logout()
                 navigate('/')
