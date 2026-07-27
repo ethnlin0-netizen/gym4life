@@ -51,7 +51,7 @@ function Register() {
             auth?.login(response.data.token, response.data.user.id, response.data.user.login)
             navigate('/dashboard')
 
-        } catch (error: any) {
+        } catch(error: any) {
             setMessage(error.response?.data?.message || 'Server error, please try again')
             setMessageType('error')
         }
