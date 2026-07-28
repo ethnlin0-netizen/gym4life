@@ -4,6 +4,9 @@ const workoutSchema = new mongoose.Schema()({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     //embedding: the sets, reps, and weight live inside the workout, so you pass the schema directly
     exercises: [workoutExerciseShema],
+    name: String,
+    comments: String,
+    status: {type: String, enum: ['active', 'completed'], default: 'active'},
     date: {type: Date, default: Date.now}}, {timestamps: true
 })
 

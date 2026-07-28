@@ -15,7 +15,7 @@ export const getExercise = async (req, res) => {
     try {
         const thisExercise = await Exercise.findById(req.params.id)
         if(!thisExercise) {
-            res.status(404).json({ message: 'Exercise not found'})
+            return res.status(404).json({ message: 'Exercise not found'})
         }
         res.status(200).json(thisExercise)
     } catch(error) {
