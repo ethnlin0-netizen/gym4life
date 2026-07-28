@@ -22,3 +22,5 @@ export const getExercise = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
+
+export default { searchExercises, getExercise }

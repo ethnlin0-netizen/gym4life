@@ -10,4 +10,4 @@ const userSchema = new mongoose.Schema({
     workouts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' }]
     });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('User', userSchema)
