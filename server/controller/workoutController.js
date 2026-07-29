@@ -121,7 +121,28 @@ export const deleteWorkout = async (req, res) => {
     } catch(error) {
         res.status(500).json({ message: error.message })
     }
-
 }
 
-export default { createWorkout, getAllWorkouts, getThisWorkout, addExercise, editExercise, deleteExercise, deleteWorkout }
+//save workout, change name, add notes, end workout
+export const editWorkout = async (req, res) => {
+    try{
+        const { name, notes, status } = req.body
+        const { id } = req.params
+        const thisWorkout = await Workout.findById(id)
+        if(!thisWorkout) {
+            return res.status(404).json({ message: 'Workout not found' })
+        }
+        if(thisWorkout.user.toString() !== req.user.id) {
+            return res.status(403).json({ message: 'Not authorized' })
+        }
+        thisWorkout.name = name || thisWorkout.name
+        thisWorkout.notes = notes || thisWorkout.notes
+        thisWorkout.status = status || thisWorkout.status
+        await thisWorkout.save()
+        res.status(200).json(thisWorkout)
+    } catch(error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+export default { createWorkout, getAllWorkouts, getThisWorkout, addExercise, editExercise, deleteExercise, deleteWorkout, editWorkout }
