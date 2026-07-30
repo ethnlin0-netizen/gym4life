@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 //library model
-const exerciseSchema = new mongoose.Schema()({
-    ExerciseName: String,
-    musclesTargeted: [String],
+const exerciseSchema = new mongoose.Schema({
+    name: String,
+    musclesWorked: [String],
     description : String
 })
 

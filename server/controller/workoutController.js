@@ -44,9 +44,9 @@ export const getThisWorkout = async (req, res) => {
 
 export const addExercise = async (req, res) => {
     try {
-        const { exerciseId, sets } = req.body
+        const { id, exerciseId, sets } = req.body
         //follows the reference to the actual exercise object to access muscles targeted, name, description
-        const thisWorkout = await Workout.findById(req.params.id).populate('exercises.exercise') //
+        const thisWorkout = await Workout.findById(id).populate('exercises.exercise') //
         if(!thisWorkout) {
             return res.status(404).json({ message: 'Workout not found' })
         }
