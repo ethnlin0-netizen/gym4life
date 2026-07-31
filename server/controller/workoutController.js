@@ -1,5 +1,6 @@
 import Workout from '../models/Workout.js'
 import Exercise from '../models/Exercise.js'
+import User from '../models/User.js'
 
 export const createWorkout = async (req, res) => {
     try {
@@ -10,7 +11,9 @@ export const createWorkout = async (req, res) => {
             //status and date have defaults so they don't need to be passed
             //exercise is an empty array by default and comments is an empty string
         })
-
+        const user = await User.findById(req.user.id)
+        user.workouts.push(newWorkout._id)
+        await user.save()
         res.status(201).json(newWorkout)
     } catch(error) {
         res.status(500).json({ message: error.message })
@@ -44,7 +47,8 @@ export const getThisWorkout = async (req, res) => {
 
 export const addExercise = async (req, res) => {
     try {
-        const { id, exerciseId, sets } = req.body
+        const { id } = req.params
+        const { exerciseId, sets } = req.body
         //follows the reference to the actual exercise object to access muscles targeted, name, description
         const thisWorkout = await Workout.findById(id).populate('exercises.exercise') //
         if(!thisWorkout) {
@@ -117,6 +121,9 @@ export const deleteWorkout = async (req, res) => {
             return res.status(403).json({ message: 'Not authorized' })
         }
         await thisWorkout.deleteOne()
+        const user = await User.findById(req.user.id)
+        user.workouts.pull(id)
+        await user.save()
         res.status(200).json({ message: 'Workout successfully deleted '})
     } catch(error) {
         res.status(500).json({ message: error.message })
