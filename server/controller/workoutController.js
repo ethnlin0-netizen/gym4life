@@ -30,6 +30,15 @@ export const getAllWorkouts = async (req, res) => {
     }
 }
 
+export const getActiveWorkout = async (req, res) => {
+    try {
+        const activeWorkout = await Workout.findOne({ user: req.user.id, status: 'active' }).populate('exercises.exercise')
+        return res.status(200).json(activeWorkout)
+    } catch(error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 export const getThisWorkout = async (req, res) => {
     try {
         const thisWorkout = await Workout.findById(req.params.id).populate('exercises.exercise')
@@ -152,4 +161,4 @@ export const editWorkout = async (req, res) => {
     }
 }
 
-export default { createWorkout, getAllWorkouts, getThisWorkout, addExercise, editExercise, deleteExercise, deleteWorkout, editWorkout }
+export default { createWorkout, getAllWorkouts, getActiveWorkout, getThisWorkout, addExercise, editExercise, deleteExercise, deleteWorkout, editWorkout }

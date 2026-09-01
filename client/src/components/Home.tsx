@@ -1,5 +1,5 @@
 import { useAuth } from '../context/AuthContext'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 function Home() {
     const auth = useAuth()
     const [workout, setWorkout] = useState(null)
