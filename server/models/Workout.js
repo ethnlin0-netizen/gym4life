@@ -17,7 +17,9 @@ const workoutSchema = new mongoose.Schema({
     name: String,
     notes: String,
     status: {type: String, enum: ['active', 'completed'], default: 'active'},
-    date: {type: Date, default: Date.now}}, {timestamps: true
+    date: {type: Date, default: Date.now}
+}, {
+    timestamps: true
 })
 
 export default mongoose.model('Workout', workoutSchema) 
