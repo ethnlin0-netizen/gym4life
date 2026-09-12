@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.tsx'
+import type { Workout } from '../types/Workout'
 import axios from 'axios'
 
-function EmptyWorkoutCard() {
+interface EmptyWorkoutCardProps {
+    onWorkoutCreated: (workout: Workout) => void
+}
+
+function EmptyWorkoutCard({ onWorkoutCreated }: EmptyWorkoutCardProps) {
     const navigate = useNavigate()
     const auth = useAuth()
     const [workoutName, setWorkoutName] = useState('')
@@ -12,7 +17,7 @@ function EmptyWorkoutCard() {
     const [expanded, setExpanded] = useState(false)
     
     //handleCreate: when the empty card is clicked, make the card enlarge to the center of the screen, and dim everything else
-    //prompt the user to enter name and notes, then when they enter execute the post. the workout card will then appear on
+    //prompt the user to enter name, then when they enter execute the post. the workout card will then appear on
     //the homescreen. when they click it, it will redirect to a separate page for the workout
     async function handleCardClick() {
         setExpanded(true)
@@ -30,7 +35,9 @@ function EmptyWorkoutCard() {
                 {name: workoutName},
                 {headers: {Authorization: `Bearer ${auth?.token}` } }
             )
-
+            onWorkoutCreated(res.data)
+            setExpanded(false)
+            //home won't automatically know a workout has been created and update to show the workout card
         } catch (error: any) {
             setMessage(error.response?.data?.message || 'Server error, please try again')
             setMessageType('error')
@@ -38,7 +45,23 @@ function EmptyWorkoutCard() {
     }
     return (
         <div className="rounded-2xl w-[210px] h-[298px] bg-[#3B353A] opacity-80">
-            <button>Create Workout</button>
+            {!expanded ? (
+                <button onClick={handleCardClick}>Create Workout</button>
+            ) : (
+                <form onSubmit={handleCreate}>
+                    {/* input bound to workoutName, cancel button calling handleCancel, submit button, message display */}
+                    <input
+                        type="text"
+                        placeholder="Workout Name"
+                        value={workoutName}
+                        onChange={(e) => setWorkoutName(e.target.value)}
+                    />
+                    <button type="button" onClick={handleCancel}>Cancel</button>
+                    <button type="submit">Create</button>
+
+                </form>
+            )}
+            {message && <p>{message}</p>}
         </div>
     )
 }
