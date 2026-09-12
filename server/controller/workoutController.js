@@ -5,6 +5,10 @@ import User from '../models/User.js'
 export const createWorkout = async (req, res) => {
     try {
         const { name } = req.body
+        const existingActive = await Workout.findOne({ user: req.user.id, status: 'active' })
+        if (existingActive) {
+            return res.status(409).json({ message: 'You already have an active workout' })
+        }
         const newWorkout = await Workout.create({
             user: req.user.id,
             name
