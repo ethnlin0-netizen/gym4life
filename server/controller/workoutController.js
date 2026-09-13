@@ -146,7 +146,7 @@ export const deleteWorkout = async (req, res) => {
 //save workout, change name, add notes, end workout
 export const editWorkout = async (req, res) => {
     try{
-        const { name, notes, status } = req.body
+        const { name, status } = req.body
         const { id } = req.params
         const thisWorkout = await Workout.findById(id)
         if(!thisWorkout) {
@@ -156,7 +156,6 @@ export const editWorkout = async (req, res) => {
             return res.status(403).json({ message: 'Not authorized' })
         }
         thisWorkout.name = name || thisWorkout.name
-        thisWorkout.notes = notes || thisWorkout.notes
         thisWorkout.status = status || thisWorkout.status
         await thisWorkout.save()
         res.status(200).json(thisWorkout)

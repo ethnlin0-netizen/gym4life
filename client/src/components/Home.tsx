@@ -1,7 +1,8 @@
 import { useAuth } from '../context/AuthContext'
 import { useEffect, useState } from 'react'
 import EmptyWorkoutCard from './EmptyWorkoutCard'
-import type { Workout } from '../types/Workout.ts'
+import ActiveWorkoutCard from './ActiveWorkoutCard'
+import type { Workout } from '../types/Workout'
 import axios from 'axios'
 
 function Home() {
@@ -35,13 +36,15 @@ function Home() {
             {isLoading ? null : workout == null ? (
                 <div className="ml-[80px] mt-[35px]">
                     <EmptyWorkoutCard onWorkoutCreated={setWorkout}/>
-                    <div className="w-[1080px] h-[1px] mx-auto mt-[35px] mr-[70px] bg-gradient-to-r from-[#FFFFFF] from-[50%] to-[#999999]" />
-                    <p className="text-[48px] text-left text-[#E7AD4E] mt-[10px]" style={{ fontFamily: 'Oswald' }}>Recent Workouts</p>
                 </div>
             ) : (
                 //active workout card
-                <div className="rounded-2xl w-[252px] h-[356px] bg-[#3B353A] opacity-80 mt-[40px] ml-[60px]" />
+                <div className="ml-[80px] mt-[35px]">
+                    <ActiveWorkoutCard workout={workout}/>
+                </div>
             )}
+            <div className="w-[1080px] h-[1px] mx-auto mt-[35px] mr-[70px] bg-gradient-to-r from-[#FFFFFF] from-[50%] to-[#999999]" />
+            <p className="text-[48px] text-left text-[#E7AD4E] mt-[10px] ml-[60px]" style={{ fontFamily: 'Oswald' }}>Recent Workouts</p>
         </div>
     )
 }
