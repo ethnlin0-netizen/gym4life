@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.tsx'
 import type { Workout } from '../types/Workout'
 import axios from 'axios'
@@ -9,7 +8,6 @@ interface EmptyWorkoutCardProps {
 }
 
 function EmptyWorkoutCard({ onWorkoutCreated }: EmptyWorkoutCardProps) {
-    const navigate = useNavigate()
     const auth = useAuth()
     const [workoutName, setWorkoutName] = useState('')
     const [message, setMessage] = useState('')
