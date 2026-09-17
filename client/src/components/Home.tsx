@@ -9,6 +9,7 @@ function Home() {
     const auth = useAuth()
     const [workout, setWorkout] = useState<Workout | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [recentCompleted, setRecentCompleted] = useState<Workout[]>([])
 
     //fetching the active workout is a network request that needs to run once when Home first appears, so useEffect is needed
     useEffect(() => {
@@ -29,6 +30,16 @@ function Home() {
             }
         }
         fetchActiveWorkout()
+    }, [auth?.token])
+
+    useEffect(() => {
+        //recent workout code here
+        async function fetchCompletedWorkouts() {
+            const res = await axios.get<Workout[]>('http://localhost:5000/api/workouts', {
+                headers: { Authorization: `Bearer: ${auth?.token}` }
+            })
+            const completedWorkouts = res.data.filter(w => w.status === 'completed').slice(0, 5)
+        }
     }, [auth?.token])
     
     return(

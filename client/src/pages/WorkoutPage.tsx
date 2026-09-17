@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useAuth } from "../context/AuthContext"
 import type { Workout } from "../types/Workout"
@@ -9,13 +9,21 @@ function WorkoutPage() {
     const auth = useAuth()
     const [workout, setWorkout] = useState<Workout | null>(null)
     const [isLoading, setIsLoading] =useState(true)
+    const navigate = useNavigate()
 
+    async function goBack() {
+        navigate('/dashboard')
+    }
     useEffect(() => {
 
     })
 
     return (
-        <p>what the goofy</p>
+        <div>
+            <p>what the goofy</p>
+            <button onClick={goBack}>Back</button>
+            <EndWorkoutButton workoutId={id!} onEnded={goBack}/>
+        </div>
     )
 }
 
