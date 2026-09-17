@@ -12,9 +12,6 @@ interface ActiveWorkoutCardProps {
 }
 
 function ActiveWorkoutCard({ workout, onEnded }: ActiveWorkoutCardProps) {
-    async function endWorkout() {
-       
-    }
 
     return (
         <div className="rounded-2xl w-[210px] h-[298px] bg-[#3B353A] opacity-80">
