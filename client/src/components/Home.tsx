@@ -53,21 +53,23 @@ function Home() {
         <div>
             <p className="text-[80px] text-left text-[#3A015C] mt-[40px] ml-[40px]" style={{ fontFamily: 'Oswald' }}>Welcome, {auth?.username}</p>
             {isLoading ? null : workout == null ? (
-                <div className="ml-[80px] mt-[35px]">
+                <div className="ml-[60px] mt-[10px]">
                     <EmptyWorkoutCard onWorkoutCreated={setWorkout}/>
                 </div>
             ) : (
                 //active workout card
-                <div className="ml-[80px] mt-[35px]">
+                <div className="ml-[60px] mt-[10px]">
                     <ActiveWorkoutCard workout={workout} onEnded={() => setWorkout(null)} />
                 </div>
             )}
             <div className="w-[1080px] h-[1px] mx-auto mt-[35px] mr-[70px] bg-gradient-to-r from-[#FFFFFF] from-[50%] to-[#999999]" />
             <div className="ml-[60px]">
                 <p className="text-[48px] text-left text-[#E7AD4E] mt-[10px]" style={{ fontFamily: 'Oswald' }}>Recent Workouts</p>
-                {recentCompleted?.length === 0 ? <p>No workouts found.</p> : recentCompleted?.map((workout) => (
-                    <CompletedWorkoutCard key={workout._id} workout={workout} />
-                ))}
+                <div className="flex gap-x-[20px]">
+                    {recentCompleted?.length === 0 ? <p>No workouts found.</p> : recentCompleted?.map((workout) => (
+                        <CompletedWorkoutCard key={workout._id} workout={workout} />
+                    ))}
+                </div>
             </div>
         </div>
     )

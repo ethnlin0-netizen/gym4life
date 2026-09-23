@@ -11,10 +11,12 @@ interface ActiveWorkoutCardProps {
     onEnded: () => void
 }
 
+//105 149
+
 function ActiveWorkoutCard({ workout, onEnded }: ActiveWorkoutCardProps) {
 
     return (
-        <div className="rounded-2xl w-[210px] h-[298px] bg-[#3B353A] opacity-80">
+        <div className="rounded-2xl w-[189px] h-[268.2px] bg-[#3B353A] opacity-80">
             <h1>{workout.name}</h1>
             <Link to={`/workout/${workout._id}`} className="">Enter</Link>
             <button>Edit</button>

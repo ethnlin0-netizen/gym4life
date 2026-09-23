@@ -70,6 +70,9 @@ export const addExercise = async (req, res) => {
         if(thisWorkout.user.toString() !== req.user.id) {
             return res.status(403).json({ message: 'Not authorized' })
         }
+        if (thisWorkout.status === 'completed') {
+            return res.status(403).json({ message: 'Cannot modify a completed workout' })
+        }
         thisWorkout.exercises.push({ exercise: exerciseId, sets })
         await thisWorkout.save()
         res.status(201).json(thisWorkout)
@@ -88,6 +91,9 @@ export const editExercise = async (req, res) => {
         }
         if(thisWorkout.user.toString() !== req.user.id) {
             return res.status(403).json({ message: 'Not authorized' })
+        }
+        if (thisWorkout.status === 'completed') {
+            return res.status(403).json({ message: 'Cannot modify a completed workout' })
         }
         const thisExercise = thisWorkout.exercises.id(exerciseId) //this was correct!
         if(!thisExercise) {
@@ -110,6 +116,9 @@ export const deleteExercise = async (req, res) => {
         }
         if(thisWorkout.user.toString() !== req.user.id) {
             return res.status(403).json({ message: 'Not authorized' })
+        }
+        if (thisWorkout.status === 'completed') {
+            return res.status(403).json({ message: 'Cannot modify a completed workout' })
         }
         const thisExercise = thisWorkout.exercises.id(exerciseId)
         if(!thisExercise) {
