@@ -12,7 +12,7 @@ function WorkoutPage() {
     const auth = useAuth()
     const [workout, setWorkout] = useState<Workout | null>(null)
     const [isLoading, setIsLoading] = useState(true)
-    const [expanded, setExpanded] = useState(false)
+    const [showExerciseList, setShowExerciseList] = useState(false)
     const navigate = useNavigate()
 
     
@@ -36,16 +36,6 @@ function WorkoutPage() {
         fetchWorkout()
     }, [auth?.token, id])
 
-    //when the button is clicked, show the interface that contains all the exercises. model it after cronometer
-    async function addClick() {
-        setExpanded(true)
-    }
-
-    async function addCancel() {
-        //the cancel button should be on the exercise list div. this might require some more prop shenanigans
-        setExpanded(false)
-    }
-
     async function addExercise() {
 
     } 
@@ -63,12 +53,18 @@ function WorkoutPage() {
                 </div>
             ) : (
                 <div>
-                    {expanded && <ExerciseListDiv />}
                     <h1>{workout.name}</h1>
                     <p>what the goofy</p>
-                    <button onClick={addClick}>Add Exercise</button>
+                    {workout.status === 'active' && <button onClick={() => setShowExerciseList(true)}>Add Exercise</button>}
+                    {showExerciseList && (
+                        <ExerciseListDiv
+                            workoutId={id!}
+                            onExerciseAdded={(updated) => setWorkout(updated)}
+                            onClose={() => setShowExerciseList(false)}
+                        />
+                    )}
                     <button onClick={goBack}>Back</button>
-                    <EndWorkoutButton workoutId={id!} onEnded={goBack}/>
+                    {workout.status === 'active' && <EndWorkoutButton workoutId={id!} onEnded={goBack}/>}
                 </div>
             )}
         </div>
