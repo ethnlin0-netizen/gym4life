@@ -11,20 +11,13 @@ import type { Exercise } from '../types/Exercise'
 import ExerciseCard from './ExerciseCard'
 import axios from 'axios'
 
-
-
-interface SetInput{
-    weight: number
-    reps: number
-}
-
 interface ExerciseListDivProps{
     workoutId: string
     onExerciseAdded: (updatedWorkout: Workout) => void
     onClose: () => void
 }
 
-function ExerciseListDiv({ onClose }: ExerciseListDivProps) {
+function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDivProps) {
     const [allExercises, setAllExercises] = useState<Exercise[]>([])
     const [searchText, setSearchText] = useState('')
     const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null)
@@ -78,7 +71,7 @@ function ExerciseListDiv({ onClose }: ExerciseListDivProps) {
                 <button onClick={() => setActiveTab('Shoulders')}>Shoulders</button>
                 <button onClick={() => setActiveTab('Arms')}>Arms</button>
                 <button onClick={() => setActiveTab('Core')}>Core</button>
-                <button onClick={() => setActiveTab('Cardio')}>Cardio</button>
+                {/*<button onClick={() => setActiveTab('Cardio')}>Cardio</button>*/}
             </div>
             <div className="grid">
                 {filteredExercises.map((exercise) => (
@@ -87,6 +80,7 @@ function ExerciseListDiv({ onClose }: ExerciseListDivProps) {
                     </div>
                 ))}
             </div>
+            {selectedExercise && <ExerciseCard exercise={selectedExercise} workoutId={workoutId} onExerciseAdded={onExerciseAdded} onBack={() => setSelectedExercise(null)}/>}
         </div>
     )
 }
