@@ -155,7 +155,7 @@ export const deleteWorkout = async (req, res) => {
 //save workout, change name, add notes, end workout
 export const editWorkout = async (req, res) => {
     try{
-        const { name, status } = req.body
+        const { name, status, notes } = req.body
         const { id } = req.params
         const thisWorkout = await Workout.findById(id)
         if(!thisWorkout) {
@@ -166,6 +166,7 @@ export const editWorkout = async (req, res) => {
         }
         thisWorkout.name = name || thisWorkout.name
         thisWorkout.status = status || thisWorkout.status
+        thisWorkout.notes = notes || thisWorkout.notes
         await thisWorkout.save()
         res.status(200).json(thisWorkout)
     } catch(error) {
