@@ -63,12 +63,27 @@ function WorkoutPage() {
                 </div>
             ) : (
                 <div className="ml-[100px] mt-[20px]">
-                    <div>
+
+                    <div className="flex items-start">
+
                         <button onClick={goBack} aria-label="Back">
-                            <ArrowLeft className="text-[#D0B1FC]" />
+                            <ArrowLeft size={40} className="mt-[20px] text-[#D0B1FC]" />
                         </button>
-                        <h1 className="text-[48px] text-left text-[#E7AD4E] mt-[10px]" style={{ fontFamily: 'Oswald' }}>Today's Session</h1>
+                        <h1 className="text-[40px] ml-[60px] text-left text-[#E7AD4E] mt-[10px]" style={{ fontFamily: 'Oswald' }}>Today's Session</h1>
+                        <div className="ml-[450px] mt-[20px]">
+                            {workout.status === 'active' && <EndWorkoutButton workoutId={id!} onEnded={goBack}/>}
+                        </div>
+
+                        <div className="flex flex-col gap-y-2">
+
+                            <div className="border border-[#392572] px-32 py-30 ml-[30px] rounded-[12px] mt-[20px]">
+                                <p className="text-[#D0B1FC] text-[20px]">Workout Overview</p>
+                            </div>
+                            
+                        </div>
+
                     </div>
+
                     <h2>{workout.name}</h2>
                     <p>{workout.exercises.length} exercises {elapsedMinutes} min {totalSets} sets total</p>
                     {workout.status === 'active' && <button onClick={() => setShowExerciseList(true)}>Add Exercise</button>}
@@ -79,8 +94,6 @@ function WorkoutPage() {
                             onClose={() => setShowExerciseList(false)}
                         />
                     )}
-                    <button onClick={goBack}>Back</button>
-                    {workout.status === 'active' && <EndWorkoutButton workoutId={id!} onEnded={goBack}/>}
                 </div>
             )}
         </div>

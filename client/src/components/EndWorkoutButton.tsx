@@ -28,7 +28,7 @@ function EndWorkoutButton({ workoutId, onEnded }: EndWorkoutButtonProps) {
     }
     return (
         <div>
-            <button onClick={handleClick}>End Workout</button>
+            <button className="border border-[#E7AD4E] text-[20px] text-[#E7AD4E] px-8 py-1 rounded-[12px]" style={{ fontFamily: 'Oswald' }} onClick={handleClick}>End Workout</button>
             {message && <p>{message}</p>}
         </div>
     )
