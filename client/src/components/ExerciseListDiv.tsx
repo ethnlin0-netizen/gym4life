@@ -10,6 +10,7 @@ import type { Workout } from '../types/Workout'
 import type { Exercise } from '../types/Exercise'
 import ExerciseCard from './ExerciseCard'
 import axios from 'axios'
+import { X } from 'lucide-react'
 
 interface ExerciseListDivProps{
     workoutId: string
@@ -51,10 +52,12 @@ function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDi
     })
 
     return (
-        <div>
+        <div className="w-[750px] h-[700px] bg-[#12061F] border border-[#392572] rounded-[12px]" style={{ fontFamily: 'Oswald' }}>
             <div className="flex">
-                <h1>Add Exercise</h1>
-                <button onClick={onClose}>Exit</button>
+                <h1 className="text-[40px] text-[#F3C47E] ml-[30px] mt-[15px]">Add Exercise</h1>
+                <button onClick={onClose} aria-label="Exit">
+                    <X size={40} className="text-[#D0B1FC] mt-[20px] ml-[475px]" />
+                </button>
             </div>
             <p>Search for an exercise or browse by category.</p>
             <input
@@ -79,7 +82,7 @@ function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDi
                         <p>{exercise.name}</p>
                     </div>
                 ))}
-            </div>
+            </div>  
             {selectedExercise && <ExerciseCard exercise={selectedExercise} workoutId={workoutId} onExerciseAdded={onExerciseAdded} onBack={() => setSelectedExercise(null)}/>}
         </div>
     )
