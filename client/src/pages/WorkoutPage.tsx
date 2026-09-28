@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext"
 import type { Workout } from "../types/Workout"
 import EndWorkoutButton from '../components/EndWorkoutButton'
 import ExerciseListDiv from '../components/ExerciseListDiv'
-import { ArrowLeft } from 'lucide-react' 
+import { ArrowLeft, Plus } from 'lucide-react' 
 import axios from 'axios'
 
 function WorkoutPage() {
@@ -15,6 +15,7 @@ function WorkoutPage() {
     const [showExerciseList, setShowExerciseList] = useState(false)
     const navigate = useNavigate()
     const [elapsedMinutes, setElapsedMinutes] = useState(0)
+    const [isDark, setIsDark] = useState(false)
 
     
     useEffect(() => {
@@ -54,6 +55,11 @@ function WorkoutPage() {
     }
 
     const totalSets = workout?.exercises.reduce((sum, ex) => sum + ex.sets.length, 0)
+    const totalReps = workout?.exercises.reduce(
+    (sum, ex) => sum + ex.sets.reduce((setSum, set) => setSum + (set.reps ?? 0), 0),
+    0
+)
+    
     return (
         <div className="flex h-screen bg-gradient-to-b from-[#11001C] from-[50%] to-[#4F0082]">
             {isLoading ? null : workout == null ? (
@@ -62,38 +68,74 @@ function WorkoutPage() {
                     <button onClick={goBack}>Back</button>
                 </div>
             ) : (
-                <div className="ml-[100px] mt-[20px]">
+                <div className="ml-[80px] mt-[20px]" style={{ fontFamily: 'Oswald' }}>
 
                     <div className="flex items-start">
-
-                        <button onClick={goBack} aria-label="Back">
-                            <ArrowLeft size={40} className="mt-[20px] text-[#D0B1FC]" />
-                        </button>
-                        <h1 className="text-[40px] ml-[60px] text-left text-[#E7AD4E] mt-[10px]" style={{ fontFamily: 'Oswald' }}>Today's Session</h1>
-                        <div className="ml-[450px] mt-[20px]">
-                            {workout.status === 'active' && <EndWorkoutButton workoutId={id!} onEnded={goBack}/>}
+                        {/* Header Row */}
+                        <div className="flex flex-col">
+                            <div className="flex items-start">
+                                <button onClick={goBack} aria-label="Back">
+                                    <ArrowLeft size={40} className="mt-[20px] text-[#D0B1FC]" />
+                                </button>
+                                <div className="flex flex-col ml-[40px]">
+                                    <h1 className="text-[40px] text-left text-[#E7AD4E] mt-[10px]">Today's Session</h1>
+                                    <p className="text-[30px] text-[#D0B1FC]">{workout.name}</p>
+                                    {workout.status === 'active' && (
+                                        <button
+                                            onClick={() => setShowExerciseList(true)}
+                                            className="flex items-center justify-center py-3 mt-[20px] rounded-[12px] border border-dashed border-[#392572] text-[#D0B1FC] text-[20px] hover:bg-[#392572]/30 transition-colors"
+                                        >
+                                            <Plus size={24} />
+                                            Add Exercise
+                                        </button>
+                                    )}
+                                </div>
+                                <div className="ml-[450px] mt-[20px]">
+                                    {workout.status === 'active' && <EndWorkoutButton workoutId={id!} onEnded={goBack}/>}
+                                </div>
+                            </div>
                         </div>
 
+                        {/* Overview */}
                         <div className="flex flex-col gap-y-2">
 
-                            <div className="border border-[#392572] px-32 py-30 ml-[30px] rounded-[12px] mt-[20px]">
-                                <p className="text-[#D0B1FC] text-[20px]">Workout Overview</p>
+                            <div className=" border border-[#392572] w-[430px] h-[220px] ml-[30px] rounded-[12px] mt-[20px]">
+                                <p className="text-[#D0B1FC] text-[20px] mt-[10px] ml-[20px]">Workout Overview</p>
+                                <p className="text-[#D0B1FC] text-[20px] ml-[20px]">{workout.name}</p>
+                                <div className="w-[385px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
+                                <div className="flex justify-between w-[385px] text-[#D0B1FC] text-[16px] ml-[20px] mt-[10px]">
+                                    <span>Estimated Time</span>
+                                    <span>{elapsedMinutes} mins</span>
+                                </div>
+                                <div className="w-[385px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
+                                <div className="flex justify-between w-[385px] text-[#D0B1FC] text-[16px] ml-[20px] mt-[10px]">
+                                    <span>Total Sets</span>
+                                    <span>{totalSets}</span>
+                                </div>
+                                <div className="w-[385px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
+                                <div className="flex justify-between w-[385px] text-[#D0B1FC] text-[16px] ml-[20px] mt-[10px]">
+                                    <span>Total Reps</span>
+                                    <span>{totalReps}</span>
+                                </div>
                             </div>
                             
                         </div>
 
                     </div>
-
-                    <h2>{workout.name}</h2>
-                    <p>{workout.exercises.length} exercises {elapsedMinutes} min {totalSets} sets total</p>
-                    {workout.status === 'active' && <button onClick={() => setShowExerciseList(true)}>Add Exercise</button>}
-                    {showExerciseList && (
-                        <ExerciseListDiv
-                            workoutId={id!}
-                            onExerciseAdded={(updated) => setWorkout(updated)}
-                            onClose={() => setShowExerciseList(false)}
-                        />
-                    )}
+                    
+                    <div
+                        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 transition-opacity duration-300 ${
+                            showExerciseList ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                        }`}
+                    >
+                        {showExerciseList && (
+                            <ExerciseListDiv
+                                workoutId={id!}
+                                onExerciseAdded={(updated) => setWorkout(updated)}
+                                onClose={() => setShowExerciseList(false)}
+                            />
+                        )}
+                    </div>
                 </div>
             )}
         </div>

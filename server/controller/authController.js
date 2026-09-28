@@ -50,7 +50,7 @@ export const login = async (req, res) => {
         }
 
         //they match, so generate a jwt and send it back
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {expiresIn: '1h'});
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {expiresIn: '4h'});
         res.status(200).json({ token, user: { id: user._id, login: user.login }})
     } catch(error) {
         res.status(500).json({ message: error.message });
