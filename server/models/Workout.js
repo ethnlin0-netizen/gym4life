@@ -16,6 +16,7 @@ const workoutSchema = new mongoose.Schema({
     exercises: [workoutExerciseSchema],
     name: String,
     status: {type: String, enum: ['active', 'completed'], default: 'active'},
+    notes: [String],
     date: {type: Date, default: Date.now}
 }, {
     timestamps: true

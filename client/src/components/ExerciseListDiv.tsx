@@ -23,6 +23,7 @@ function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDi
     const [searchText, setSearchText] = useState('')
     const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null)
     const [activeTab, setActiveTab] = useState<string>('All')
+    const [showExerciseCard, setShowExerciseCard] = useState(false)
     const [message, setMessage] = useState('')
     const categoryMap: Record<string, string[]> = {
         Chest: ['chest'],
@@ -77,19 +78,26 @@ function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDi
                     onChange={(e) => setSearchText(e.target.value)}
                 />
             </div>
-            <div className="flex gap-x-[10px] text-[16px] text-[#D0B1FC] mt-[15px] ml-[30px]">
-                <button className="border border-[#41235C] rounded-[20px] w-[90px] h-[40px]" onClick={() => setActiveTab('All')}>All</button>
-                <button className="border border-[#41235C] rounded-[20px] w-[90px] h-[40px]" onClick={() => setActiveTab('Chest')}>Chest</button>
-                <button className="border border-[#41235C] rounded-[20px] w-[90px] h-[40px]" onClick={() => setActiveTab('Back')}>Back</button>
-                <button className="border border-[#41235C] rounded-[20px] w-[90px] h-[40px]" onClick={() => setActiveTab('Legs')}>Legs</button>
-                <button className="border border-[#41235C] rounded-[20px] w-[90px] h-[40px]" onClick={() => setActiveTab('Shoulders')}>Shoulders</button>
-                <button className="border border-[#41235C] rounded-[20px] w-[90px] h-[40px]" onClick={() => setActiveTab('Arms')}>Arms</button>
-                <button className="border border-[#41235C] rounded-[20px] w-[90px] h-[40px]" onClick={() => setActiveTab('Core')}>Core</button>
+            <div className="flex gap-x-[10px] text-[16px] mt-[15px] ml-[30px]">
+                <button className={activeTab === 'All' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('All')}>All</button>
+                <button className={activeTab === 'Chest' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Chest')}>Chest</button>
+                <button className={activeTab === 'Back' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Back')}>Back</button>
+                <button className={activeTab === 'Legs' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Legs')}>Legs</button>
+                <button className={activeTab === 'Shoulders' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Shoulders')}>Shoulders</button>
+                <button className={activeTab === 'Arms' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Arms')}>Arms</button>
+                <button className={activeTab === 'Core' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Core')}>Core</button>
                 {/*<button onClick={() => setActiveTab('Cardio')}>Cardio</button>*/}
             </div>
             <div className="grid mt-[15px] gap-y-[10px]">
                 {filteredExercises.map((exercise) => (
-                    <div className="bg-[#D0B1FC]/5 ml-[30px] border border-[#41235C] rounded-[12px] w-[660px] h-[60px] hover:bg-[#41235C]/10 transition-colors" key={exercise._id} onClick={() => setSelectedExercise(exercise) }>
+                    <div className="
+                        bg-[#D0B1FC]/5 ml-[30px] border border-[#41235C] 
+                        rounded-[12px] w-[660px] h-[60px] hover:bg-[#41235C]/10 transition-colors" 
+                        key={exercise._id} 
+                        onClick={() => {
+                            setSelectedExercise(exercise)
+                            setShowExerciseCard(true)
+                        }}>
                         <div className="flex justify-between">
                             <div className="grid">
                                 <p className="ml-[15px] mt-[7px] text-[#FFFFFF] text-[14px]">{exercise.name}</p>
@@ -100,7 +108,22 @@ function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDi
                     </div>
                 ))}
             </div>  
-            {selectedExercise && <ExerciseCard exercise={selectedExercise} workoutId={workoutId} onExerciseAdded={onExerciseAdded} onBack={() => setSelectedExercise(null)}/>}
+
+            <div
+                className={`fixed inset-0 z-50 flex items-center justify-center bg-black/70 transition-opacity duration-300 ${
+                    showExerciseCard ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+            >
+                {showExerciseCard && (
+                    <ExerciseCard
+                        exercise={selectedExercise!}
+                        workoutId={workoutId}
+                        onExerciseAdded={onExerciseAdded}
+                        exerciseType={getCategoryForExercise(selectedExercise!)}
+                        onBack={() => setShowExerciseCard(false)}
+                    />
+                )}
+            </div>
         </div>
     )
 }

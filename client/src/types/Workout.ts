@@ -16,6 +16,6 @@ export interface Workout {
     name?: string
     status: 'active' | 'completed'
     date: string
-    notes: string
+    notes: string[]
     exercises: WorkoutExercise[]
 }

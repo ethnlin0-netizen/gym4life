@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext"
 import type { Workout } from "../types/Workout"
 import EndWorkoutButton from '../components/EndWorkoutButton'
 import ExerciseListDiv from '../components/ExerciseListDiv'
-import { ArrowLeft, Plus } from 'lucide-react' 
+import { ArrowLeft, Plus, Clipboard } from 'lucide-react' 
 import axios from 'axios'
 
 function WorkoutPage() {
@@ -56,12 +56,10 @@ function WorkoutPage() {
 
     const totalSets = workout?.exercises.reduce((sum, ex) => sum + ex.sets.length, 0)
     const totalReps = workout?.exercises.reduce(
-    (sum, ex) => sum + ex.sets.reduce((setSum, set) => setSum + (set.reps ?? 0), 0),
-    0
-)
+    (sum, ex) => sum + ex.sets.reduce((setSum, set) => setSum + (set.reps ?? 0), 0),0)
     
     return (
-        <div className="flex h-screen bg-gradient-to-b from-[#11001C] from-[50%] to-[#4F0082]">
+        <div className="flex h-screen bg-gradient-to-b from-[#11001C] from-[50%] to-[#1D104E]">
             {isLoading ? null : workout == null ? (
                 <div>
                     <p>This does not exist.</p> 
@@ -83,7 +81,7 @@ function WorkoutPage() {
                                     {workout.status === 'active' && (
                                         <button
                                             onClick={() => setShowExerciseList(true)}
-                                            className="flex items-center justify-center py-3 mt-[20px] rounded-[12px] border border-dashed border-[#392572] text-[#D0B1FC] text-[20px] hover:bg-[#392572]/30 transition-colors"
+                                            className="flex items-center justify-center py-3 mt-[20px] rounded-[12px] border border-dashed border-[#41235C] text-[#D0B1FC] text-[20px] hover:bg-[#392572]/30 transition-colors"
                                         >
                                             <Plus size={24} />
                                             Add Exercise
@@ -99,23 +97,34 @@ function WorkoutPage() {
                         {/* Overview */}
                         <div className="flex flex-col gap-y-2">
 
-                            <div className=" border border-[#392572] w-[430px] h-[220px] ml-[30px] rounded-[12px] mt-[20px]">
-                                <p className="text-[#D0B1FC] text-[20px] mt-[10px] ml-[20px]">Workout Overview</p>
-                                <p className="text-[#D0B1FC] text-[20px] ml-[20px]">{workout.name}</p>
-                                <div className="w-[385px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
-                                <div className="flex justify-between w-[385px] text-[#D0B1FC] text-[16px] ml-[20px] mt-[10px]">
+                            <div className="border border-[#41235C] w-[450px] h-[220px] ml-[40px] rounded-[12px] mt-[20px]">
+                                <h1 className="text-[#D0B1FC] text-[20px] mt-[10px] ml-[30px]">Workout Overview</h1>
+                                <p className="text-[#D0B1FC] text-[20px] ml-[30px]">{workout.name}</p>
+                                <div className="w-[395px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
+                                <div className="flex justify-between w-[385px] text-[#D0B1FC] text-[16px] ml-[30px] mt-[10px]">
                                     <span>Estimated Time</span>
                                     <span>{elapsedMinutes} mins</span>
                                 </div>
-                                <div className="w-[385px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
-                                <div className="flex justify-between w-[385px] text-[#D0B1FC] text-[16px] ml-[20px] mt-[10px]">
+                                <div className="w-[395px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
+                                <div className="flex justify-between w-[385px] text-[#D0B1FC] text-[16px] ml-[30px] mt-[10px]">
                                     <span>Total Sets</span>
                                     <span>{totalSets}</span>
                                 </div>
-                                <div className="w-[385px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
-                                <div className="flex justify-between w-[385px] text-[#D0B1FC] text-[16px] ml-[20px] mt-[10px]">
+                                <div className="w-[395px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
+                                <div className="flex justify-between w-[385px] text-[#D0B1FC] text-[16px] ml-[30px] mt-[10px]">
                                     <span>Total Reps</span>
                                     <span>{totalReps}</span>
+                                </div>
+                            </div>
+                            
+                            <div className="border border-[#41235C] w-[450px] h-[260px] ml-[40px] rounded-[12px] mt-[20px]">
+                                <h1 className="text-[#D0B1FC] text-[20px] mt-[10px] ml-[30px]">Muscles Worked</h1>
+                            </div>
+                            
+                            <div className="border border-[#41235C] w-[450px] h-[220px] ml-[40px] rounded-[12px] mt-[20px]">
+                                <div className="flex mt-[10px] ml-[20px]">
+                                    <Clipboard size={20} className="text-[#D0B1FC] mt-[5px]" />
+                                    <h1 className="text-[#D0B1FC] text-[20px] ml-[5px]">Notes</h1>
                                 </div>
                             </div>
                             
