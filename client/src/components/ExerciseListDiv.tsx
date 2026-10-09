@@ -88,7 +88,7 @@ function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDi
                 <button className={activeTab === 'Core' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Core')}>Core</button>
                 {/*<button onClick={() => setActiveTab('Cardio')}>Cardio</button>*/}
             </div>
-            <div className="grid mt-[15px] gap-y-[10px]">
+            <div className="grid mt-[15px] gap-y-[10px] overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#41235C_transparent]">
                 {filteredExercises.map((exercise) => (
                     <div className="
                         bg-[#D0B1FC]/5 ml-[30px] border border-[#41235C] 

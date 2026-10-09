@@ -75,6 +75,7 @@ export const addExercise = async (req, res) => {
         }
         thisWorkout.exercises.push({ exercise: exerciseId, sets })
         await thisWorkout.save()
+        await thisWorkout.populate('exercises.exercise')
         res.status(201).json(thisWorkout)
     } catch(error) {
         res.status(500).json({ message: error.message })
@@ -101,6 +102,7 @@ export const editExercise = async (req, res) => {
         }
         thisExercise.sets = sets
         await thisWorkout.save()
+        await thisWorkout.populate('exercises.exercise')
         res.status(200).json(thisWorkout)
     } catch(error) {
         res.status(500).json({ message: error.message })

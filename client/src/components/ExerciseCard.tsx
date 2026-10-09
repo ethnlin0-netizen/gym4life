@@ -50,7 +50,7 @@ function ExerciseCard({ exercise, workoutId, onExerciseAdded, exerciseType, onBa
                 <p className="text-[#02ECF6] text-[12px] mt-[165px] ml-[15px]">FORM PREVIEW</p>
             </div>
             <div className="mt-[15px] ml-[20px] border border-[#3D0A2F] bg-[#0A0019] w-[360px] h-[160px]">
-                <p className="text-[#B2A2CF] text-[10px] mt-[15px] ml-[15px]">{exercise.description}</p>
+                <p className="text-[#B2A2CF] text-[11px] mt-[15px] ml-[15px] mr-[15px]">{exercise.description}</p>
             </div>
             <div className="mt-[10px] ml-[20px] flex" onClick={handleAdd}>
                 <p className="text-[#FF2D78] text-[12px]">ADD TO WORKOUT</p>
