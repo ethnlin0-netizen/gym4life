@@ -22,7 +22,6 @@ interface DraftSet {
 
 function SetUI({ workoutId, exerciseId, exerciseName, initialSets, onSaved, onClose }: SetUIProps) {
     const auth = useAuth()
-    // Strings let users clear an input while typing without turning it into zero.
     const [sets, setSets] = useState<DraftSet[]>(() => initialSets.map(set => ({
         id: crypto.randomUUID(),
         reps: set.reps?.toString() ?? '',
@@ -102,7 +101,7 @@ function SetUI({ workoutId, exerciseId, exerciseName, initialSets, onSaved, onCl
                             />
                         </label>
                         <label className="min-w-0 flex-1">
-                            Weight
+                            Weight (lbs)
                             <input type="number" min="0" step="any" required value={set.weight}
                                 onChange={event => updateSet(set.id, 'weight', event.target.value)}
                                 className="mt-1 w-full rounded-lg border border-[#41235C] bg-[#1D104E] p-2"

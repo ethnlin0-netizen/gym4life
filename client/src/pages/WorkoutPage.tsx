@@ -22,6 +22,14 @@ function WorkoutPage() {
     const navigate = useNavigate()
     const [elapsedMinutes, setElapsedMinutes] = useState(0)
     const [isDark, setIsDark] = useState(false)
+    const categoryMap: Record<string, string[]> = {
+        Chest: ['chest'],
+        Back: ['trapezius', 'upper-back', 'lower-back'],
+        Legs: ['quadriceps', 'hamstring', 'calves', 'gluteal', 'adductors', 'abductors'],
+        Shoulders: ['deltoids'],
+        Arms: ['biceps', 'triceps', 'forearm'],
+        Core: ['abs', 'obliques'],
+    }
 
     
     useEffect(() => {
@@ -69,6 +77,24 @@ function WorkoutPage() {
         })
     }
 
+    function getExerciseColor(musclesWorked: string[]) {
+    const category = Object.keys(categoryMap).find(category =>
+        categoryMap[category].some(muscle => musclesWorked.includes(muscle))
+    )
+
+    if(category === 'Chest' || category === 'Shoulders') {
+        return 'border-[#801454] bg-[#170035]'
+    }
+    if(category === 'Back' || category === 'Arms') {
+        return 'border-yellow-400/50 bg-[#170035]'
+    }
+    if(category === 'Legs' || category === 'Core') {
+        return 'border-blue-400/50 bg-[#170035]'
+    }
+
+    return 'border-[#41235C] bg-[#D0B1FC]/5'
+}
+
     const totalSets = workout?.exercises.reduce((sum, ex) => sum + ex.sets.length, 0)
     const totalReps = workout?.exercises.reduce(
     (sum, ex) => sum + ex.sets.reduce((setSum, set) => setSum + (set.reps ?? 0), 0),0)
@@ -115,21 +141,21 @@ function WorkoutPage() {
                                 </div>
 
                                 {/* List the exercises here*/}
-                                <div className="w-[725px] max-h-[70vh] overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#41235C_transparent]">
+                                <div className="w-[725px] max-h-[70vh] overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#41235C_transparent]" style={{ fontFamily: "Orbitron" }}>
                                     {workout.exercises.map((item, index) => (
-                                        <div className="mt-[15px] w-[650px] min-h-[100px] border border-[#41235C]
-                                        ml-[60px] rounded-[12px] p-[15px] bg-[#D0B1FC]/5 flex items-start gap-x-[20px]" 
+                                        <div className={`mt-[15px] w-[650px] min-h-[100px] border
+                                        ml-[60px] p-[15px] flex items-start gap-x-[20px] ${getExerciseColor(item.exercise.musclesWorked)}`}
                                         key={item._id}>
                                             <div className="flex items-center justify-center w-[25px] h-[25px] shrink-0 rounded-full border border-[#E7AD4E] bg-[#E7AD4E]/10 text-[#E7AD4E] text-[16px]">
                                                 {index + 1}
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                            <p className="text-[#FFFFFF] text-[20px]">{item.exercise.name}</p>
+                                            <p className="text-[#FFFFFF] text-[20px] font-bold text-shadow-lg text-shadow-[#5D0E49]" style={{ textTransform: "uppercase" }}>{item.exercise.name}</p>
                                             {item.sets.length > 0 && (
-                                                <div className="mt-[10px] text-[#D0B1FC] text-[16px]">
+                                                <div className="mt-[10px] text-[#02ECF6] text-[16px]">
                                                     {item.sets.map((set, index) => (
                                                         <p key={index} className="mt-[5px]">
-                                                            Set {index + 1}: {set.reps ?? '—'} reps | Weight: {set.weight ?? '—'}
+                                                            Set {index + 1}: {set.reps ?? '—'} reps | Weight (lbs): {set.weight ?? '—'}
                                                         </p>
                                                     ))}
                                                 </div>
