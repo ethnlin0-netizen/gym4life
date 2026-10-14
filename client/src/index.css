@@ -6,3 +6,13 @@ html, body, #root {
   width: 100%;
   height: 100%;
 }
+
+.notes-scrollbar {
+  scrollbar-width: none;
+}
+
+.notes-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}

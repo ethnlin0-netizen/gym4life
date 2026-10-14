@@ -20,7 +20,7 @@ interface DraftSet {
     weight: string
 }
 
-function SetUI({ workoutId, exerciseId, exerciseName, initialSets, onSaved, onClose }: SetUIProps) {
+function SetUi({ workoutId, exerciseId, exerciseName, initialSets, onSaved, onClose }: SetUIProps) {
     const auth = useAuth()
     const [sets, setSets] = useState<DraftSet[]>(() => initialSets.map(set => ({
         id: crypto.randomUUID(),
@@ -97,14 +97,14 @@ function SetUI({ workoutId, exerciseId, exerciseName, initialSets, onSaved, onCl
                             Reps
                             <input type="number" min="1" step="1" required value={set.reps}
                                 onChange={event => updateSet(set.id, 'reps', event.target.value)}
-                                className="mt-1 w-full rounded-lg border border-[#41235C] bg-[#1D104E] p-2"
+                                className="mt-1 w-full rounded-lg border border-[#41235C] bg-[#1D104E] p-2 [color-scheme:dark] focus:outline-none focus:border-[#E7AD4E]"
                             />
                         </label>
                         <label className="min-w-0 flex-1">
                             Weight (lbs)
                             <input type="number" min="0" step="any" required value={set.weight}
                                 onChange={event => updateSet(set.id, 'weight', event.target.value)}
-                                className="mt-1 w-full rounded-lg border border-[#41235C] bg-[#1D104E] p-2"
+                                className="mt-1 w-full rounded-lg border border-[#41235C] bg-[#1D104E] p-2 [color-scheme:dark] focus:outline-none focus:border-[#E7AD4E]"
                             />
                         </label>
                         <button type="button" aria-label={`Delete set ${index + 1}`} className="p-2 text-red-300"
@@ -130,4 +130,4 @@ function SetUI({ workoutId, exerciseId, exerciseName, initialSets, onSaved, onCl
     )
 }
 
-export default SetUI
+export default SetUi

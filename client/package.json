@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@bryllim/workout-guide": "^1.0.0",
+    "@mjcdev/react-body-highlighter": "^0.0.4",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.18.1",

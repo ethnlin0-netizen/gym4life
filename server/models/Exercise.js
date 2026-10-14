@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 const exerciseSchema = new mongoose.Schema({
     name: String,
     musclesWorked: [String],
+    primaryMuscles: { type: [String], default: [] },
+    secondaryMuscles: { type: [String], default: [] },
     description : String
 })
 
