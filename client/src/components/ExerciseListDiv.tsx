@@ -59,6 +59,8 @@ function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDi
         return matchesSearch && matchesCategory
     })
 
+    const categories = ['All', 'Chest', 'Back', 'Legs', 'Shoulders', 'Arms', 'Core']
+
     return (
         <div className="w-[750px] h-[700px] bg-[#12061F] border border-[#41235C] rounded-[12px]" style={{ fontFamily: 'Oswald' }}>
             <div className="flex">
@@ -79,13 +81,15 @@ function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDi
                 />
             </div>
             <div className="flex gap-x-[10px] text-[16px] mt-[15px] ml-[30px]">
-                <button className={activeTab === 'All' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('All')}>All</button>
-                <button className={activeTab === 'Chest' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Chest')}>Chest</button>
-                <button className={activeTab === 'Back' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Back')}>Back</button>
-                <button className={activeTab === 'Legs' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Legs')}>Legs</button>
-                <button className={activeTab === 'Shoulders' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Shoulders')}>Shoulders</button>
-                <button className={activeTab === 'Arms' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Arms')}>Arms</button>
-                <button className={activeTab === 'Core' ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"} onClick={() => setActiveTab('Core')}>Core</button>
+                {categories.map(category => (
+                    <button
+                        key={category}
+                        onClick={() => setActiveTab(category)}
+                        className={activeTab === category ? "border rounded-[20px] w-[90px] h-[40px] border-[#E7AD4E] bg-[#E7AD4E]/10 hover:bg-[#E7AD4E]/15 transition-colors text-[#E7AD4E]" : "border rounded-[20px] w-[90px] h-[40px] border-[#41235C] text-[#D0B1FC] border-[#41235C] hover:bg-[#41235C]/70 transition-colors"}
+                    >
+                        {category}
+                    </button>
+                ))}
                 {/*<button onClick={() => setActiveTab('Cardio')}>Cardio</button>*/}
             </div>
             <div className="grid mt-[15px] gap-y-[10px] overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#41235C_transparent]">

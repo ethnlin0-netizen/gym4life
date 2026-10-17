@@ -12,8 +12,8 @@ interface SetInput{
 
 interface ExerciseCardProps{
     exercise: Exercise
-    workoutId: string
-    onExerciseAdded: (updatedWorkout: Workout) => void
+    workoutId?: string
+    onExerciseAdded?: (updatedWorkout: Workout) => void
     exerciseType: string
     onBack: () => void
 }
@@ -24,6 +24,7 @@ function ExerciseCard({ exercise, workoutId, onExerciseAdded, exerciseType, onBa
     const auth = useAuth()
 
     async function handleAdd() {
+        if(!workoutId || !onExerciseAdded) return
         try{
             const res = await axios.post(`http://localhost:5000/api/workouts/${workoutId}/exercises`,
                 { exerciseId: exercise._id, sets: [] },
@@ -41,7 +42,7 @@ function ExerciseCard({ exercise, workoutId, onExerciseAdded, exerciseType, onBa
             <div className="flex justify-between">
                 <h1 className="text-[16px] text-[#75569A] mt-[20px] ml-[20px]">{exerciseType.toUpperCase()}</h1>
                 <button onClick={onBack} aria-label="Back">
-                    <X size={30} className="text-[#D0B1FC] mt-[20px] ml-[275px]" />
+                    <X size={30} className="text-[#D0B1FC] mt-[20px] ml-[240px]" />
                 </button>
             </div>
             <p className="text-[30px] text-[#FFFFFF] ml-[20px] font-bold text-shadow-lg text-shadow-[#5D0E49]">{exercise.name.toUpperCase()}</p>
@@ -52,10 +53,12 @@ function ExerciseCard({ exercise, workoutId, onExerciseAdded, exerciseType, onBa
             <div className="mt-[15px] ml-[20px] border border-[#3D0A2F] bg-[#0A0019] w-[360px] h-[160px]">
                 <p className="text-[#B2A2CF] text-[11px] mt-[15px] ml-[15px] mr-[15px]">{exercise.description}</p>
             </div>
-            <div className="mt-[10px] ml-[20px] flex" onClick={handleAdd}>
-                <p className="text-[#FF2D78] text-[12px]">ADD TO WORKOUT</p>
-                <ChevronRight size={15} className="text-[#FF2D78] ml-[10px]" />
-            </div>
+            {workoutId && onExerciseAdded && (
+                <div className="mt-[10px] ml-[20px] flex" onClick={handleAdd}>
+                    <p className="text-[#FF2D78] text-[12px]">ADD TO WORKOUT</p>
+                    <ChevronRight size={15} className="text-[#FF2D78] ml-[10px]" />
+                </div>
+            )}
             {message && <p>{message}</p>}
         </div>
     )

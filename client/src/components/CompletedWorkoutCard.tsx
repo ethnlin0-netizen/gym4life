@@ -40,15 +40,19 @@ function CompletedWorkoutCard({ workout, onDeleted }: CompletedWorkoutCardProps)
         }
     }
     return (
-        <div className="rounded-2xl w-[178.5px] h-[253.3px] bg-[#3B353A] opacity-80">
-            <h1>{workout.name}</h1>
-            <p>{workout.date}</p>
-            <Link to={`/workout/${workout._id}`} className="">View</Link>
+        <div className="flex flex-col min-w-0 rounded-[16px] border border-[#41235C] bg-[#170D29] p-[20px] hover:border-[#75569A] transition-colors">
+            <div className="flex items-center justify-between gap-[10px]">
+                <span className="text-[11px] text-[#78D9A0] uppercase tracking-[1px]">Completed</span>
+                <span className="text-[12px] text-[#B2A2CF]">{new Date(workout.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+            </div>
+            <h3 className="mt-[20px] text-[24px] text-white break-words">{workout.name || 'Untitled workout'}</h3>
+            <p className="mt-[8px] mb-[25px] text-[15px] text-[#B2A2CF]">{workout.exercises.length} exercises · {workout.exercises.reduce((total, exercise) => total + exercise.sets.length, 0)} sets</p>
+            <Link to={`/workout/${workout._id}`} className="mt-auto rounded-[10px] border border-[#75569A] px-[12px] py-[8px] text-center text-[#D0B1FC] hover:bg-[#75569A]/15">View Session →</Link>
             <button
                 type="button"
                 onClick={deleteWorkout}
                 disabled={isDeleting}
-                className="block mt-[10px] border border-[#FF2D78] rounded-[12px] px-[15px] py-[5px] text-[#FF2D78] hover:bg-[#FF2D78]/10 disabled:opacity-50"
+                className="mt-[12px] text-[13px] text-[#B2A2CF] hover:text-[#FF2D78] disabled:opacity-50"
             >
                 {isDeleting ? 'Deleting...' : 'Delete Workout'}
             </button>
