@@ -3,6 +3,7 @@ import Sidebar from './Sidebar.tsx'
 import { useLocation } from 'react-router-dom'
 import Home from './Home.tsx'
 import Exercises from './Exercises.tsx'
+import History from './History.tsx'
 
 //Dashboard just becomes a vessel to hold the other tabs
 //flex flex-col stacks items vertically in sidebar
@@ -16,6 +17,7 @@ function Dashboard() {
             <div className="w-4/5 min-w-0 overflow-y-auto">
                 {activeTab === 'home' && <Home />}
                 {activeTab === 'exercises' && <Exercises />}
+                {activeTab === 'history' && <History />}
             </div>
         </div>
     )

@@ -133,7 +133,7 @@ function Home() {
                         <p className="mt-[8px] text-[#B2A2CF]">Finish a workout and it will appear in your session log.</p>
                     </div>
                 )}
-                <div className="grid gap-[15px] sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+                <div className="grid gap-[15px] sm:grid-cols-2 lg:grid-cols-3">
                     {recentCompleted?.slice(0, 6).map((workout) => (
                         <CompletedWorkoutCard
                             key={workout._id}
