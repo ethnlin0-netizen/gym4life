@@ -166,6 +166,13 @@ export const editWorkout = async (req, res) => {
         if(thisWorkout.user.toString() !== req.user.id) {
             return res.status(403).json({ message: 'Not authorized' })
         }
+        if(thisWorkout.status === 'completed' && status && status !== 'completed') {
+            return res.status(400).json({ message: 'A completed workout cannot be restarted' })
+        }
+        // Record the finish time once, so later notes or repeated requests don't change duration.
+        if(status === 'completed' && thisWorkout.status !== 'completed') {
+            thisWorkout.completedAt = new Date()
+        }
         thisWorkout.name = name || thisWorkout.name
         thisWorkout.status = status || thisWorkout.status
         thisWorkout.notes = notes || thisWorkout.notes

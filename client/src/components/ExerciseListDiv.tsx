@@ -63,6 +63,7 @@ function ExerciseListDiv({ workoutId, onExerciseAdded, onClose }: ExerciseListDi
 
     return (
         <div className="w-[750px] h-[700px] bg-[#12061F] border border-[#41235C] rounded-[12px]" style={{ fontFamily: 'Oswald' }}>
+            {message && <p role="alert" className="px-[20px] pt-[15px] text-[#FF2D78]">{message}</p>}
             <div className="flex">
                 <h1 className="text-[40px] text-[#F3C47E] ml-[30px] mt-[15px]">Add Exercise</h1>
                 <button onClick={onClose} aria-label="Exit">

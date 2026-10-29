@@ -6,7 +6,7 @@ import type { Workout, WorkoutExercise } from "../types/Workout"
 import EndWorkoutButton from '../components/EndWorkoutButton'
 import ExerciseListDiv from '../components/ExerciseListDiv'
 import SetUI from '../components/SetUI'
-import { ArrowLeft, Plus, Clipboard, Circle, Trash2 } from 'lucide-react' 
+import { ArrowLeft, Plus, Clipboard, Circle } from 'lucide-react'
 import axios from 'axios'
 import Sidebar from "../components/Sidebar"
 import { exercises, getAssetUrl, normalizeSearchText } from '@bryllim/workout-guide'
@@ -24,8 +24,7 @@ function WorkoutPage() {
     // Completion is kept on this page for now, rather than saved to the database.
     const [completedExercises, setCompletedExercises] = useState<string[]>([])
     const navigate = useNavigate()
-    const [elapsedMinutes, setElapsedMinutes] = useState(0)
-    const [isDark, setIsDark] = useState(false)
+    const [elapsedMinutes, setElapsedMinutes] = useState<number | null>(null)
     const categoryMap: Record<string, string[]> = {
         Chest: ['chest'],
         Back: ['trapezius', 'upper-back', 'lower-back'],
@@ -67,14 +66,18 @@ function WorkoutPage() {
     useEffect(() => {
         function fetchTime() {
             if(!workout?.date) return
-            const elapsed = (Date.now() - new Date(workout.date).getTime()) / 60000
-            setElapsedMinutes(Math.floor(elapsed))
+            const end = workout.status === 'completed'
+                ? (workout.completedAt ? new Date(workout.completedAt).getTime() : NaN)
+                : Date.now()
+            const elapsed = (end - new Date(workout.date).getTime()) / 60000
+            setElapsedMinutes(Number.isFinite(elapsed) && elapsed >= 0 ? Math.floor(elapsed) : null)
         }
 
         fetchTime()
+        if(workout?.status !== 'active') return
         const intervalId = setInterval(fetchTime, 60000)
         return () => clearInterval(intervalId)
-    }, [workout?.date])
+    }, [workout?.date, workout?.completedAt, workout?.status])
 
     async function goBack() {
         navigate('/dashboard')
@@ -337,7 +340,7 @@ function WorkoutPage() {
                                     <div className="w-[330px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
                                     <div className="flex justify-between w-[325px] text-[#D0B1FC] text-[16px] ml-[30px] mt-[10px]">
                                         <span>Estimated Time</span>
-                                        <span>{elapsedMinutes} mins</span>
+                                        <span>{elapsedMinutes === null ? 'Duration unavailable' : `${elapsedMinutes} mins`}</span>
                                     </div>
                                     <div className="w-[330px] mt-[10px] h-[1px] mx-auto bg-[#392572]" />
                                     <div className="flex justify-between w-[325px] text-[#D0B1FC] text-[16px] ml-[30px] mt-[10px]">

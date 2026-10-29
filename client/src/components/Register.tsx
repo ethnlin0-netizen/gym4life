@@ -10,7 +10,6 @@ function Register() {
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
-    const [messageType, setMessageType] = useState<'success' | 'error'>('error')
     const navigate = useNavigate()
     const auth = useAuth()
 
@@ -20,19 +19,16 @@ function Register() {
         //frontend validation for password
         if(password.length < 8) {
             setMessage('Password must be at least 8 characters long')
-            setMessageType('error')
             return
         }
 
         if(!/[A-Z]/.test(password)) {
             setMessage('Password must contain a capital letter')
-            setMessageType('error')
             return
         }
 
         if(!/[0-9]/.test(password)) {
             setMessage('Password must contain a number')
-            setMessageType('error')
             return
         }
 
@@ -53,7 +49,6 @@ function Register() {
 
         } catch(error: any) {
             setMessage(error.response?.data?.message || 'Server error, please try again')
-            setMessageType('error')
         }
     }
 

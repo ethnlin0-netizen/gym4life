@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import Sidebar from './Sidebar.tsx'
-import { useLocation } from 'react-router-dom'
 import Home from './Home.tsx'
 import Exercises from './Exercises.tsx'
 import History from './History.tsx'
+import Progress from './Progress.tsx'
 
 //Dashboard just becomes a vessel to hold the other tabs
 //flex flex-col stacks items vertically in sidebar
 function Dashboard() {
-    const location = useLocation()
     const [activeTab, setActiveTab] = useState<string>('home')
 
     return (
@@ -18,6 +17,7 @@ function Dashboard() {
                 {activeTab === 'home' && <Home />}
                 {activeTab === 'exercises' && <Exercises />}
                 {activeTab === 'history' && <History />}
+                {activeTab === 'progress' && <Progress />}
             </div>
         </div>
     )

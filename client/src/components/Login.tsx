@@ -7,7 +7,6 @@ function Login() {
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
-    const [messageType, setMessageType] = useState('')
     const navigate = useNavigate()
     const auth = useAuth()
 
@@ -25,7 +24,6 @@ function Login() {
 
         } catch(error: any) {
             setMessage(error.response?.data?.message || 'Server error, please try again')
-            setMessageType('error');
             setLogin('')
             setPassword('')
         }

@@ -5,11 +5,6 @@ import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { X, ChevronRight } from 'lucide-react'
 
-interface SetInput{
-    weight: number
-    reps: number
-}
-
 interface ExerciseCardProps{
     exercise: Exercise
     workoutId?: string
@@ -19,7 +14,6 @@ interface ExerciseCardProps{
 }
 
 function ExerciseCard({ exercise, workoutId, onExerciseAdded, exerciseType, onBack }: ExerciseCardProps) {
-    const [sets, setSets] = useState<SetInput[]>([{ weight: 0, reps: 0 }])
     const [message, setMessage] = useState('')
     const auth = useAuth()
 
